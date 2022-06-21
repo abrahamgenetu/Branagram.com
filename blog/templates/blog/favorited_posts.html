@@ -1,0 +1,156 @@
+{% extends "blog/base.html" %}
+{% load static %}
+{% block content %}
+
+<div class="single-channel-page" id="content-wrapper">
+    <div class="single-channel-image">
+        <img  alt=""  class="img-fluid" src="{{user.profile.cover_image.url}}">
+        <div class="channel-profile">
+            <img class="channel-profile-img" alt="" src="{{user.profile.image.url}}">
+            <div class="social hidden-xs">
+                Social &nbsp;
+                <a class="fb" href="#">Facebook</a>
+                <a class="tw" href="#">Twitter</a>
+                <a class="gp" href="#">Google</a>
+            </div>
+        </div>
+    </div>
+    <div class="single-channel-nav">
+        <nav class="navbar navbar-expand-lg navbar-light">
+            <a class="channel-brand" href="#">{{user.username}}<span title="" data-placement="top" data-toggle="tooltip" data-original-title="Verified"><i class="fas fa-check-circle text-success"></i></span></a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Profile
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="#">View Profile</a>
+                            <a class="dropdown-item" href="{% url 'profile' %}">Edit Profile</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="#">Something else here</a>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'fellowship' user.pk %}">fellowship</a>
+                    </li>
+                         <li class="nav-item">
+                        <a class="nav-link" href="{% url 'profile_pk' user.pk %}">posts</a>
+                    </li>
+
+                    <li class="nav-item ">
+                        <a class="nav-link" href="{% url 'user-category' user.username %}">Gallery <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item ">
+                        <a class="nav-link" href="{% url 'user-playlist' user.username %}">Playlist</a>
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link active" href="#">Favorites</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">About</a>
+                    </li>
+
+                </ul>
+                <form class="form-inline my-2 my-lg-0">
+                    <input class="form-control form-control-sm mr-sm-1" type="search" placeholder="Search" aria-label="Search"><button class="btn btn-outline-success btn-sm my-2 my-sm-0" type="submit"><i class="fas fa-search"></i></button> &nbsp;&nbsp;&nbsp;
+                </form>
+            </div>
+        </nav>
+    </div>
+    <div class="container-fluid" data-aos="fade" data-aos-delay="500">
+        <div class="video-block section-padding">
+            <div class="main-title">
+                <div class="btn-group float-right right-action">
+                    <a href="#" class="right-action-link text-gray" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Sort by <i class="fa fa-caret-down" aria-hidden="true"></i>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right">
+                        <a class="dropdown-item" href="#"><i class="fas fa-fw fa-star"></i> &nbsp; Top Rated</a>
+                        <a class="dropdown-item" href="#"><i class="fas fa-fw fa-signal"></i> &nbsp; Viewed</a>
+                        <a class="dropdown-item" href="#"><i class="fas fa-fw fa-times-circle"></i> &nbsp; Close</a>
+                    </div>
+                </div>
+                <h6>{{user.username}}'s</h6> favorited posts
+                <hr>
+            </div>
+
+            <div class="row" id="lightgallery">
+                {% for post in posts %}
+                {% if post.photo %}
+                <div class="col-sm-6 col-md-4 col-lg-4 col-xl-3" data-aos="fade" data-src="{{post.photo.url}}" data-sub-html="<h4>{{post.title}}</h4><p>{{post.content}}</p>">
+                    <div class="video-card">
+                        <div class="video-card-image">
+                            <a class="play-icon" href="#"><i class="fas fa-images"></i></a>
+                            <a href="#"><img height="200" width="100%" src="{{ post.photo.url }}" alt=""></a>
+                        </div>
+                        <div class="video-card-body">
+                            <div class="video-title">
+                                <a href="#">{{post.title}}</a>
+                            </div>
+                            <div class="video-page text-success">
+                                {{post.category}} <a title="" data-placement="top" data-toggle="tooltip" href="#" data-original-title="Verified"><i class="fas fa-check-circle text-success"></i></a>
+                            </div>
+                            <div class="video-view">
+                               {{post.total_likes}} likes&nbsp;<i class="fas fa-calendar-alt"></i> {{ post.date_posted }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+                {% if post.video %}
+                <div class="col-xl-3 col-sm-6 mb-3" data-aos="fade" data-src="{{post.video.url}}" data-sub-html="<h4>{{post.title}}</h4><p>{{post.content}}</p>">
+                    <div class="video-card">
+                        <div class="video-card-image">
+                            <a class="play-icon" href="#"><i class="fas fa-play-circle"></i></a>
+                            {% if post.photo %}<a href="{% url 'post_detail' post.id %}"><img class="img-fluid" src="{{post.photo.url}}" alt=""></a>
+                            {% else %} <a href="{% url 'post_detail' post.id %}">  <video>
+                            <source src="{{post.video.url}}" type="video/mp4"> </video></a>{% endif %}
+                        </div>
+                        <div class="video-card-body">
+                            <div class="video-title">
+                                <a href="{% url 'post_detail' post.id %}">{{post.title}}</a>
+                            </div>
+                            <div class="video-page text-success">
+                                {{post.category}} <a title="" data-placement="top" data-toggle="tooltip" href="#" data-original-title="Verified"><i class="fas fa-check-circle text-success"></i></a>
+                            </div>
+                            <div class="video-view">
+                                {{post.total_likes}} likes&nbsp;<i class="fas fa-calendar-alt"></i> {{ post.date_posted }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                 {% else %}
+                 <div class="col-sm-6 col-md-4 col-lg-4 col-xl-3" data-aos="fade" data-src="{{post.photo.url}}" data-sub-html="<h4>{{post.title}}</h4><p>{{post.content}}</p>">
+                    <div class="video-card">
+                        <div class="video-card-image">
+                            <a class="play-icon" href="#"><i class="fas fa-images"></i></a>
+                            <a href="#"><img height="163" width="100%" src="/static/img/brana.PNG" alt=""></a>
+                        </div>
+                        <div class="video-card-body">
+                            <div class="video-title">
+                                <a href="{% url 'post_detail' post.id %}">{{post.title}}</a>
+                            </div>
+                            <div class="video-page text-success">
+                                {{post.category}} <a title="" data-placement="top" data-toggle="tooltip" href="#" data-original-title="Verified"><i class="fas fa-check-circle text-success"></i></a>
+                            </div>
+                            <div class="video-view">
+                                {{post.total_likes}} likes&nbsp;<i class="fas fa-calendar-alt"></i> {{ post.date_posted }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    <!-- /.container-fluid -->
+    <!-- Sticky Footer -->
+
+</div>
+<!-- /.content-wrapper -->
+{% endblock content %}
