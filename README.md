@@ -2,8 +2,8 @@
 
 Branagram is a digital **brana**, inspired by Ethiopia's timeless cultural and religious manuscripts. This platform empowers users to share their creations, innovations, and unforgettable moments, ensuring that our heritage thrives in the digital world.
 
-https://www.branagram.com
-![Simulation Screenshot](./branagram.png)!
+https://branagram.com
+![Simulation Screenshot](./branagram.png)
 
 ## Features
 - **Cultural Heritage**: Celebrate and preserve Ethiopia's rich traditions with a modern digital twist.
