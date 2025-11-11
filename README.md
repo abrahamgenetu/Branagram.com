@@ -4,6 +4,7 @@ Branagram is a digital **brana**, inspired by Ethiopia's timeless cultural and r
 
 https://www.branagram.com
 
+
 ## Features
 - **Cultural Heritage**: Celebrate and preserve Ethiopia's rich traditions with a modern digital twist.
 - **Robust Backend**: Built on Django to ensure efficient data management and security.
